@@ -21,6 +21,7 @@ function calculaRiscoInfarto($dadosCardiaco, $nInstancia) {
     $atorComMaiorAumento = -1;
     $maiorDiferencaPrimeiroUltimo = 0;
     $maiorUltimoNumero = 0;
+    $empate = true; // Variável para verificar se houve empate em todos os critérios
 
     // Percorre cada linha da matriz de dados cardíacos
     foreach ($dadosCardiaco as $indice => $linha) {
@@ -52,6 +53,7 @@ function calculaRiscoInfarto($dadosCardiaco, $nInstancia) {
                         $maiorDiferencaPrimeiroUltimo = $diferenca;
                         $maiorUltimoNumero = $linha[$fimIntervalo];
                         $atorComMaiorAumento = $indice + 1;
+                        $empate = false; // Houve uma atualização, então não há empate
                     }
                     $inicioIntervalo = -1;
                     $fimIntervalo = -1;
@@ -61,8 +63,13 @@ function calculaRiscoInfarto($dadosCardiaco, $nInstancia) {
         }
     }
 
+    if ($empate) {
+        $atorComMaiorAumento = 1;
+    }
+
     // Imprime o resultado com o ator com maior risco de ataque cardíaco
     echo "Instância #$nInstancia<br> $atorComMaiorAumento<br>";
+    echo "<br>";
 }
 
 calculaRiscoInfarto($dados, 1);
